@@ -72,8 +72,11 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
     && composer clear-cache \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/cache/apk/* ~/.composer
+    && rm -rf ~/.composer
+
+# Clean Up
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/cache/apk/*
 
 # Link log files
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \

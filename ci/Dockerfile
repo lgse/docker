@@ -62,14 +62,13 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
     && composer clear-cache \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/cache/apk/* ~/.composer
+    && rm -rf ~/.composer
 
-# Install Node via NVM
-RUN curl -O https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh --insecure \
-    && bash install.sh \
-    && export NVM_DIR="$HOME/.nvm" \
-    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
-    && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
-    && nvm install 13.1.0 \
-    && nvm use 13.1.0
+# Install Node
+RUN curl -sL https://deb.nodesource.com/setup_13.x -o node_setup.sh \
+    && bash node_setup.sh \
+    && apt-get install -y nodejs build-essential
+
+# Clean Up
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/cache/apk/*
