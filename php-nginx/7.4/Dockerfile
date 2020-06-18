@@ -94,4 +94,10 @@ COPY php-fpm-www.conf /etc/php/7.4/fpm/pool.d/www.conf
 # Add Scripts
 COPY start.sh /start.sh
 
+# See PHP Version
+RUN php -v    
+
+# See NginX Version
+RUN nginx -v    
+
 EXPOSE 80
